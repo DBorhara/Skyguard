@@ -51,6 +51,10 @@ class Sensors:
         average_eco2 = (eco2_ccs811 + eco2_sgp30)/2
         average_tvoc = (tvoc_ccs811 + tvoc_sgp30)/2
 
+        # Calculate medians if enough data
+        self.eco2_data.append(average_eco2)
+        self.tvoc_data.append(average_tvoc)
+
         # Median Data of eCO2 and TVOC from last minute
         median_eco2 = statistics.median(self.eco2_data) if len(
             self.eco2_data) > 0 else "N/A"

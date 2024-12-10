@@ -31,10 +31,14 @@ def main():
         print(f"SGP30 eCO2: {data['eco2_sgp30']} ppm, TVOC: {
               data['tvoc_sgp30']} ppb")
 
+        # Print GPS else print average + median tvoc, eco2
         if gps_fix:
             print(f"GPS Fix: Lat: {gps_lat}, Lon: {gps_lon}, Alt: {gps_alt} m")
         else:
-            print("GPS: No Fix")
+            print(f"TVOC: Average TVOC:{
+                  data['average_tvoc']} Median TVOC:{data['median_tvoc']}")
+            print(f"eCO2: Average eCO2:{
+                  data['average_eco2']} Median eCO2:{data['median_eco2']}")
 
         # Format LCD lines
         # Sesnor Outputs - Change data here to get different sensor outputs
@@ -45,7 +49,12 @@ def main():
             lon_str = f"{gps_lon:.2f}"
             line2 = f"{lat_str},{lon_str}"
         else:
-            line2 = "GPS:No Fix"
+            avg_tvoc_string = f"{data['average_tvoc']:.2f}"
+            avg_eco2_string = f"{data['average_eco2']:.2f}"
+            median_tvoc_string = f"{data['median_tvoc']:.2f}"
+            median_eco2_string = f"{data['median_eco2']:.2f}"
+            line2 = f"TVOC:A:{avg_tvoc_string}, M:{median_tvoc_string}, eCO2:A:{
+                avg_eco2_string}, M:{median_eco2_string}"
 
         # Display data on LCD
         lcd.display_data(line1, line2)
